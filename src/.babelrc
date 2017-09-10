@@ -1,0 +1,16 @@
+{
+  "plugins": [
+     "transform-object-rest-spread",
+     "transform-async-generator-functions"
+  ],
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ],
+  "ignore": [
+        "node_modules"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "api-gateway",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist/ && babel src --out-dir dist/",
+    "start": "npm run build && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yurikoex/api-gateway.git"
+  },
+  "keywords": [],
+  "author": "Joshua Lunsford",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/yurikoex/api-gateway/issues"
+  },
+  "homepage": "https://github.com/yurikoex/api-gateway#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-generator-functions": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  },
+  "dependencies": {
+    "create-subject-with-filter": "0.0.5",
+    "good": "^7.3.0",
+    "good-console": "^6.4.0",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.5.2"
+  }
+}
