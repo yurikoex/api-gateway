@@ -15,19 +15,14 @@ const logger = new Subject()
 
 const setupLogger = logger => server => {
 	logger.subscribe(arg => {
-		const { message, data } =
-			typeof arg == 'string'
-				? { message: arg }
-				: Array.isArray(arg)
-					? { message: arg[0], data: arg[1] }
-					: arg
+		const { message, data } = typeof arg == 'string' ? { message: arg } : Array.isArray(arg) ? { message: arg[0], data: arg[1] } : arg
 		server.log(message, data)
 	})
 	return server
 }
 
-const setup = (logger, data, server) => f =>
-	f({ logger, data })
+const setup = (logger, data, server, create) =>
+	create({ logger, data })
 		.then(routes => {
 			forEach(routes, r => {
 				logger.next([`registering route`, r])
@@ -39,11 +34,9 @@ const setup = (logger, data, server) => f =>
 			server
 		}))
 
-const setupRegistrationApi = logger => ({ data, server }) =>
-	setup(logger, data, server)(createRegistrationApi)
+const setupRegistrationApi = logger => ({ data, server }) => setup(logger, data, server, createRegistrationApi)
 
-const setupEndpoints = logger => ({ data, server }) =>
-	setup(logger, data, server)(createEndpoints)
+const setupEndpoints = logger => ({ data, server }) => setup(logger, data, server, createEndpoints)
 
 const setupData = logger => server =>
 	getDataInstance({ logger }).then(data => ({
