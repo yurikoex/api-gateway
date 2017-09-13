@@ -26,7 +26,7 @@ export const createEndpoints = ({ logger, data }) => {
 									{
 										json: true
 									},
-									function(err, payload) {
+									(err, payload) => {
 										reply(payload).headers = res.headers
 									}
 								)
