@@ -12,50 +12,22 @@ export const createEndpoints = ({ logger, data }) => {
 				handler: {
 					proxy: {
 						mapUri: (req, cb) => {
-							logger.next([
-								`h2o2 headers`,
-								req.headers
-							])
-							cb(
-								null,
-								service.config
-									.uri,
-								req.headers
-							)
+							logger.next([`h2o2 headers`, req.headers])
+							cb(null, service.config.uri, req.headers)
 						},
-						onResponse: (
-							err,
-							res,
-							req,
-							reply,
-							settings,
-							ttl
-						) => {
+						onResponse: (err, res, req, reply, settings, ttl) => {
 							if (err) {
-								logger.next([
-									`h2o2 error`,
-									err
-								])
-								return reply(
-									err
-								)
+								logger.next([`h2o2 error`, err])
+								return reply(err)
 							} else {
-								logger.next(
-									`h2o2 successful`
-								)
+								logger.next(`h2o2 successful`)
 								Wreck.read(
 									res,
 									{
 										json: true
 									},
-									function(
-										err,
-										payload
-									) {
-										reply(
-											payload
-										).headers =
-											res.headers
+									function(err, payload) {
+										reply(payload).headers = res.headers
 									}
 								)
 							}
