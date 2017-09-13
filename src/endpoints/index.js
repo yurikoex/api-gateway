@@ -19,7 +19,8 @@ export const createEndpoints = ({ logger, data }) => {
 							cb(
 								null,
 								service.config
-									.uri
+									.uri,
+								req.headers
 							)
 						},
 						onResponse: (
@@ -30,8 +31,6 @@ export const createEndpoints = ({ logger, data }) => {
 							settings,
 							ttl
 						) => {
-							//console.log(JSON.stringify(res.body, null, '\t'))
-							//logger.next([`h2o2 response`, res])
 							if (err) {
 								logger.next([
 									`h2o2 error`,

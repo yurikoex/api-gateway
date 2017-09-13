@@ -16,42 +16,49 @@ const logger = new Subject()
 const setupLogger = logger => server => {
 	logger.subscribe(arg => {
 		const { message, data } =
-		typeof arg == 'string' ? { message: arg } :
-			Array.isArray(arg) ? { message: arg[0], data: arg[1] } :
-			arg
+			typeof arg == 'string'
+				? { message: arg }
+				: Array.isArray(arg)
+					? { message: arg[0], data: arg[1] }
+					: arg
 		server.log(message, data)
 	})
 	return server
 }
 
-const setup = (logger, data, server) => f => f({ logger, data }).then(routes => {
-		forEach(routes, r => {
-			logger.next([`registering route`, r])
-			server.route(r)
+const setup = (logger, data, server) => f =>
+	f({ logger, data })
+		.then(routes => {
+			forEach(routes, r => {
+				logger.next([`registering route`, r])
+				server.route(r)
+			})
 		})
+		.then(() => ({
+			data,
+			server
+		}))
+
+const setupRegistrationApi = logger => ({ data, server }) =>
+	setup(logger, data, server)(createRegistrationApi)
+
+const setupEndpoints = logger => ({ data, server }) =>
+	setup(logger, data, server)(createEndpoints)
+
+const setupData = logger => server =>
+	getDataInstance({ logger }).then(data => ({
+		data,
+		server
+	}))
+
+const startServer = logger => ({ server }) =>
+	server.start(err => {
+		if (err) {
+			throw err
+		}
+		logger.next(`${process.title} started`)
+		logger.next(`server up on ${port}`)
 	})
-	.then(() => ({
-		data,
-		server
-	}))
-
-const setupRegistrationApi = logger => ({ data, server }) => setup(logger, data, server)(createRegistrationApi)
-
-const setupEndpoints = logger => ({ data, server }) => setup(logger, data, server)(createEndpoints)
-
-const setupData = logger => server => getDataInstance({ logger })
-	.then(data => ({
-		data,
-		server
-	}))
-
-const startServer = logger => ({ server }) => server.start(err => {
-	if (err) {
-		throw err
-	}
-	logger.next(`${process.title} started`)
-	logger.next(`server up on ${port}`)
-})
 
 // Startup sequence
 createHttpServer({ logger, port })
