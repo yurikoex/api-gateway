@@ -21,15 +21,9 @@ export const createEndpoints = ({ logger, data }) => {
 								return reply(err)
 							} else {
 								logger.next(`h2o2 successful`)
-								Wreck.read(
-									res,
-									{
-										json: true
-									},
-									(err, payload) => {
-										reply(payload).headers = res.headers
-									}
-								)
+								Wreck.read(res, { json: true }, (err, payload) => {
+									reply(payload).headers = res.headers
+								})
 							}
 						}
 					}
