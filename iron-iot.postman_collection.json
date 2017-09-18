@@ -1,0 +1,59 @@
+{
+	"variables": [],
+	"info": {
+		"name": "iron-iot",
+		"_postman_id": "e5043587-18ad-396a-a056-b5ae48a4d8fb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "local getServices",
+			"request": {
+				"url": "http://localhost:8080/api/services",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "local registerService",
+			"request": {
+				"url": "http://localhost:8080/api/services/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"route\":\"/api/users\",\n  \"config\":{\n    \"uri\":\"https://jsonplaceholder.typicode.com/users\",\n    \"version\": \"0.0.1\",\n    \"method\": \"GET\"\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "local dynamic users",
+			"request": {
+				"url": "http://localhost:8080/api/users",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
