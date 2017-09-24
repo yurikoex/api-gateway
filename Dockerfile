@@ -4,7 +4,7 @@ WORKDIR /app
 ADD . /app
 
 RUN npm i
-RUN npm build
+RUN npm run build
 
 ENV PORT 8080
 ENV DOCKER TRUE
