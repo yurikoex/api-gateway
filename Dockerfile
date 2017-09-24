@@ -4,7 +4,6 @@ WORKDIR /app
 ADD . /app
 
 RUN npm i
-RUN npm rebuild
 RUN npm build
 
 ENV PORT 8080
